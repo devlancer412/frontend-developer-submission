@@ -1,9 +1,28 @@
+import { isAddress } from "ethers/lib/utils";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import { useProvider } from "../hooks";
 
 const Header = () => {
+  const provider = useProvider();
   const navigate = useNavigate();
   const [address, setAddress] = useState<string>('');
+
+  const viewGalleryHandler = async () => {
+    if (!isAddress(address)) {
+      toast.error("Invalid address");
+      return;
+    }
+
+    const code = await provider.getCode(address);
+    if (code === "0x") {
+      toast.error("This is not contract address")
+      return;
+    }
+
+    navigate(`/${address}`);
+  }
 
   return <div className="w-full shadow-md shadow-slate-600 p-4">
     <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-start gap-3">
@@ -18,7 +37,7 @@ const Header = () => {
         <button
           type="button"
           className='btn-primary p-1! ml-1 rounded'
-          onClick={() => navigate(`/${address}`)}>
+          onClick={viewGalleryHandler}>
           →
         </button>
       </div>
