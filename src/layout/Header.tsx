@@ -16,7 +16,7 @@ const Header = () => {
     }
 
     const code = await provider.getCode(address);
-    if (code === "0x") {
+    if (code !== "0x") {
       toast.error("This is not contract address")
       return;
     }
@@ -31,7 +31,7 @@ const Header = () => {
         <input
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          placeholder="Please input nft contract address"
+          placeholder="Please input address here"
           className="flex-1 text-md ring-0 focus:ring-0 focus:outline-none border-[1px] rounded-md border-slate-600 border-opacity-40 min-w-[300px] p-2"
         />
         <button

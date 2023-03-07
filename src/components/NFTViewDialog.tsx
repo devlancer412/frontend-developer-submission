@@ -13,7 +13,6 @@ interface Props {
 }
 
 export const NFTViewDialog: React.FC<Props> = ({ isOpen, setIsOpen, nft }) => {
-  const { collection } = useGallery();
   useEffect(() => {
     if (!nft) {
       setIsOpen(false)
@@ -56,11 +55,13 @@ export const NFTViewDialog: React.FC<Props> = ({ isOpen, setIsOpen, nft }) => {
                 <img className="w-[280px]" src={nft?.imageUrl} alt="Collection Image" />
                 <div className="flex flex-col items-start">
                   <h3 className="text-4xl font-bold mb-5">{nft?.name}</h3>
-                  <p className="text-lg font-bold">Owner: {shortenAddress(nft?.owner ?? '')}</p>
+                  <p className="text-lg font-bold">ID: {nft?.id ?? ''}</p>
+                  <p className="text-lg font-bold">SYMBOL: {nft?.symbol ?? ''}</p>
+                  <p className="text-lg font-bold">OWNER: {shortenAddress(nft?.owner ?? '')}</p>
                   <a
                     className='btn-primary w-40 mt-4 rounded'
                     target="_blank"
-                    href={`https://opensea.io/assets/ethereum/${collection?.address}/${nft?.id}`}
+                    href={nft?.permalink}
                     rel="noreferrer"
                   >
                     Purchase Now

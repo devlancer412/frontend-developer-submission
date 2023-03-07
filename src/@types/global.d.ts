@@ -1,29 +1,23 @@
 type NFTType = "ERC721" | "ERC1155"
 
-interface CollectionData {
+interface NFTData {
   address: string
   name: string
   symbol: string
+  description: string
   type: NFTType
-  totalSupply: number
-  imageUrl: string
-  openseaSlug: string
-}
-
-interface NFTData {
   id: number
   name: string
   imageUrl: string
-  owner?: string
+  owner: string
+  permalink: string
 }
 
 interface GalleryContextType {
-  collection: CollectionData | undefined;
-  startId: number
-  size: number
   nfts: NFTData[]
+  limit: number;
+  nextCursor?: string
+  prevCursor?: string
   error?: string
-  loadCollection: (address: string) => Promise<void>
-  onSelectPage: (offset: number) => void
-  setPageSize: (size: number) => void
+  load: (address: string, cursor?: string) => Promise<void>
 }
